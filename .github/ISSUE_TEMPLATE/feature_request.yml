@@ -1,0 +1,38 @@
+name: Feature request
+
+description: Идея или улучшение
+
+labels: [enhancement]
+
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую задачу это решает
+      placeholder: Хочу, чтобы модель сама правила файлы…
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Предлагаемое решение
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Альтернативы
+      description: Что уже пробовал и почему не подошло.
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Область
+      options:
+        - label: Чат и стриминг
+        - label: Каталог моделей
+        - label: Контекст и работа с кодом
+        - label: Провайдеры
+        - label: Настройки и UX

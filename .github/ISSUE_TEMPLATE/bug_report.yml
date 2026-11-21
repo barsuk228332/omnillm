@@ -1,0 +1,80 @@
+name: Bug report
+
+description: Что-то сломалось или ведёт себя странно
+
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за репорт! Ключ и содержимое переписки прикладывать не нужно.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Что произошло
+      description: Опиши фактическое поведение и чего ожидал.
+      placeholder: При нажатии «Обновить» список моделей пустой…
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги воспроизведения
+      placeholder: |
+        1. Открыть сайдбар OmniLLM
+        2. Задать ключ
+        3. Нажать ⟳
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Версия OmniLLM
+      placeholder: 0.1.1
+    validations:
+      required: true
+
+  - type: input
+    id: vscode
+    attributes:
+      label: Версия VS Code и ОС
+      placeholder: 1.146.0, Fedora 45
+    validations:
+      required: true
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Провайдер
+      options:
+        - Polza.ai
+        - Ollama
+        - OpenRouter
+        - Другой OpenAI-совместимый
+        - Не знаю
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи
+      description: |
+        `Ctrl+Shift+P` → `OmniLLM: Проверить API-ключ` (только маска),
+        и при необходимости вывод из `Help → Toggle Developer Tools → Console`.
+        Убери ключи, токены и личные данные.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Проверки
+      options:
+        - label: Я проверил, что ключ задан и провайдер доступен
+          required: true
+        - label: В отчёте нет API-ключей и секретов
+          required: true

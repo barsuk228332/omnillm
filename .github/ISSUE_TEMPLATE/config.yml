@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Вопрос по использованию
+    url: https://github.com/barsuk228332/omnillm/discussions
+    about: Задай вопрос в Discussions, если это не баг и не фича

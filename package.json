@@ -1,0 +1,201 @@
+{
+  "name": "omnillm",
+  "displayName": "OmniLLM",
+  "description": "Чат с нейросетями через OpenAI-совместимый API (Polza.ai, Ollama и другие) прямо в VS Code",
+  "version": "0.1.1",
+  "publisher": "local",
+  "license": "MIT",
+  "author": "OmniLLM contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barsuk228332/omnillm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barsuk228332/omnillm/issues"
+  },
+  "homepage": "https://github.com/barsuk228332/omnillm#readme",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "chat",
+    "llm",
+    "openai",
+    "polza",
+    "ollama"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "omnillm",
+          "title": "OmniLLM",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "omnillm": [
+        {
+          "id": "omnillm.chat",
+          "type": "webview",
+          "name": "Чат"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "omnillm.open",
+        "title": "Открыть чат",
+        "category": "OmniLLM"
+      },
+      {
+        "command": "omnillm.newChat",
+        "title": "Новый чат",
+        "category": "OmniLLM",
+        "icon": "$(add)"
+      },
+      {
+        "command": "omnillm.addSelection",
+        "title": "Добавить выделение в контекст",
+        "category": "OmniLLM"
+      },
+      {
+        "command": "omnillm.addFile",
+        "title": "Добавить текущий файл в контекст",
+        "category": "OmniLLM"
+      },
+      {
+        "command": "omnillm.refreshModels",
+        "title": "Обновить список моделей",
+        "category": "OmniLLM",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "omnillm.setApiKey",
+        "title": "Задать API-ключ",
+        "category": "OmniLLM",
+        "icon": "$(key)"
+      },
+      {
+        "command": "omnillm.keyStatus",
+        "title": "Проверить API-ключ",
+        "category": "OmniLLM"
+      },
+      {
+        "command": "omnillm.clearApiKey",
+        "title": "Удалить API-ключ",
+        "category": "OmniLLM"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "omnillm.newChat",
+          "when": "view == omnillm.chat",
+          "group": "navigation@1"
+        },
+        {
+          "command": "omnillm.refreshModels",
+          "when": "view == omnillm.chat",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "omnillm.addSelection",
+        "key": "ctrl+alt+a",
+        "mac": "cmd+alt+a"
+      },
+      {
+        "command": "omnillm.addFile",
+        "key": "ctrl+alt+f",
+        "mac": "cmd+alt+f"
+      }
+    ],
+    "configuration": {
+      "title": "OmniLLM",
+      "properties": {
+        "omnillm.baseUrl": {
+          "type": "string",
+          "default": "https://polza.ai/api/v1",
+          "markdownDescription": "Base URL OpenAI-совместимого API. Для Polza.ai — `https://polza.ai/api/v1`, для Ollama — `http://localhost:11434/v1`."
+        },
+        "omnillm.modelsQuery": {
+          "type": "string",
+          "default": "type=chat",
+          "markdownDescription": "Query-строка для `GET /models`. У Polza.ai `type=chat` отсекает картинки, эмбеддинги и прочее. Оставь пустым, если провайдер не понимает параметр."
+        },
+        "omnillm.model": {
+          "type": "string",
+          "default": "openai/gpt-4o",
+          "description": "Модель по умолчанию. Можно сменить прямо в сайдбаре."
+        },
+        "omnillm.systemPrompt": {
+          "type": "string",
+          "default": "Ты — полезный ассистент по программированию. Отвечай по-русски, кратко и по делу. Код оформляй в markdown-блоках с указанием языка.",
+          "editPresentation": "multilineText",
+          "description": "Системный промпт."
+        },
+        "omnillm.temperature": {
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Температура генерации."
+        },
+        "omnillm.maxTokens": {
+          "type": "number",
+          "default": 4096,
+          "minimum": 1,
+          "description": "Максимум токенов в ответе."
+        },
+        "omnillm.maxContextChars": {
+          "type": "number",
+          "default": 24000,
+          "minimum": 2000,
+          "description": "Бюджет истории диалога в символах (старые сообщения обрезаются)."
+        },
+        "omnillm.requestTimeoutMs": {
+          "type": "number",
+          "default": 180000,
+          "minimum": 5000,
+          "description": "Таймаут одного запроса в миллисекундах."
+        },
+        "omnillm.streamUsage": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Передавать `stream_options.include_usage`, чтобы в конце стрима приходила стоимость (`usage.cost_rub`). Отключи, если провайдер отклоняет это поле."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node test/smoke.cjs",
+    "package": "npm run build && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "dompurify": "^3.1.6",
+    "highlight.js": "^11.10.0",
+    "marked": "^14.1.0"
+  }
+}
